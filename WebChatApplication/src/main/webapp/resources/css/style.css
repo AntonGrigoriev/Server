@@ -1,0 +1,181 @@
+.wrapper{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border: 2px solid #000000;
+    width: 1000px;
+    height: 600px;
+}
+.hat{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    height: 28px;
+    background-color: #EBEBEB;
+    border: 2px solid #000000;
+    text-align: center;
+}
+.loginbox{
+    position: absolute;
+    right: 0px;
+    top: 30px;
+    height: 150px;
+    width: 299px;
+    border: 2px solid #000000;
+}
+.usersbox{
+    position: absolute;
+    right: 0px;
+    top: 182px;
+    height: 382px;
+    width: 299px;
+    border: 2px solid #000000;
+}
+.infobar1{
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    height: 28px;
+    width: 295px;
+    border: 2px solid #000000;
+    text-align: center;
+    font-size: 115%;
+    resize: none;
+    vertical-align: central;
+    font-size:145%;
+}
+.infobar2{
+    position: absolute;
+    right: 150px;
+    bottom: 0px;
+    height: 32px;
+    width: 149px;
+    border: 2px solid #000000;
+    text-align: center;
+    font-size: 115%;
+}
+.messageslist{
+    position: absolute;
+    left: 0px;
+    bottom: 34px;
+    height: 532px;
+    width: 695px;
+    border: 2px solid #000000;
+    overflow: auto;
+}
+.messagebox{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 695px;
+    height: 32px;
+    border: 2px solid #000000;
+}
+.itd{
+    height: auto;
+    width: auto;
+    vertical-align: bottom;
+}
+.mtd{
+    height: auto;
+    width: auto;
+    vertical-align: top;
+}
+.ntd{
+    height: auto;
+    width: auto;
+    vertical-align: top;
+    font-size: 120%;
+    color: #808080;
+    font-weight: bold;
+}
+.name{
+    position: absolute;
+    top: 0px;
+}
+.sender{
+    height: 32px;
+    width: 64px;
+}
+.msg{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    height: 27px;
+    width: 626px;
+    resize: none;
+}
+.login-form{
+    position: absolute;
+    bottom: 45px;
+    right: 47px;
+    width: 200px;
+}
+.lsavebut{
+    position: absolute;
+    bottom: 15px;
+    right: 96px;
+    width: 50px;
+}
+.leditbut{
+    position: absolute;
+    bottom: 15px;
+    left: 96px;
+    width: 50px;
+}
+.login{
+    position: absolute;
+    top: 16px;
+    left: 0px;
+    width: 294px;
+    height: 62px;
+    text-align: center;
+    vertical-align: top;
+    font-size: 200%;
+    resize: none;
+    border: 0px;
+}
+.sys{
+    color: #b3b3b3;
+}
+.system{
+    color: #999;
+    font-size: 115%;
+    margin-bottom: 5px;
+}
+img{
+    height: 13px;
+    width: 13px;
+}
+textarea {
+    outline: none;
+    -moz-appearance: none;
+    border: 1px solid #999;
+}
+input {
+    outline: none;
+    -moz-appearance: none;
+    border: 1px solid #999;
+}
+.mes{
+    vertical-align: top;
+    resize: none;
+    border: 0px;
+    width: 666px;
+    font-size: 115%;
+}
+.line{
+    width: 625px;
+}
+.minfo{
+    height: 15px;
+    width: 250px;
+    vertical-align: bottom;
+    resize: none;
+    border: 0px;
+    color: #999;
+}
+.time{
+    color: #999;
+    vertical-align: central;
+}

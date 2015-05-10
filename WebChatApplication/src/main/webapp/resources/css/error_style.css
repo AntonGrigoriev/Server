@@ -1,0 +1,30 @@
+.wrapper {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border: 2px solid #000000;
+    width: 1000px;
+    height: 600px;
+    text-align: center;
+}
+
+.num_error {
+    position: absolute;
+    font-size: 500%;
+    color: #696969;
+    top: 180px;
+}
+
+.text_error {
+    position: absolute;
+    font-size: 300%;
+    color: #696969;
+    top: 280px;
+}
+
+.dtext_error{
+    position: absolute;
+    font-size: 300%;
+    color: #696969;
+    top: 340px;
+}
