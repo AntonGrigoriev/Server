@@ -77,7 +77,7 @@ function saveLogin(evtObj) {
             return;
         }
         if (Login.value !== logIn.value) {
-            sendSystemMessage(Login.value + " change name to " + logIn.value, true);
+            sendSystemMessage(Login.value + " change name to " + logIn.value);
             Login.value = logIn.value;
         }
         logIn.value = '';
@@ -199,11 +199,9 @@ function deleteMessage(msg, isMine) {
     mes.firstChild.firstChild.firstChild.childNodes[2].firstChild.value = info;
 }
 
-function sendSystemMessage(text, toPost) {
+function sendSystemMessage(text) {
     var msg = mStruct(Login.value, text, '', '', clientId, 'system');
-    if (toPost) {
-        doPost(mainUrl, msg);
-    }
+    doPost(mainUrl, msg);
 }
 
 function printSystemMessage(text) {
@@ -222,11 +220,11 @@ function clientSwitch(isStart) {
     if (server) {
         infobar.value = 'Server: OFF';
         if (!isStart)
-            sendSystemMessage('Server disconnected', false);
+            printSystemMessage('Server disconnected', false);
     } else {
         infobar.value = 'Server: ON';
         if (!isStart)
-            sendSystemMessage('Server connected', false);
+            printSystemMessage('Server connected', false);
         textField.focus();
     }
     server = !server;
@@ -281,8 +279,10 @@ function restoreHistory() {
         addMessages(response.messages, true);
         setTimeout(listenMessages, 1000);
     }, function (error) {
-        if (server) {
-            clientSwitch();
+        if (error !== "Server disconnected") {
+            if (!server) {
+                clientSwitch();
+            }
         }
         defaultErrorHandler(error);
         setTimeout(listenMessages, 1000);
@@ -303,8 +303,14 @@ function listenMessages() {
             }
             setTimeout(loop, 1000);
         }, function (error) {
-            if (server) {
-                clientSwitch();
+            if (error === "Server disconnected") {
+                if (server) {
+                    clientSwitch();
+                }
+            } else {
+                if (!server) {
+                    clientSwitch();
+                }
             }
             defaultErrorHandler(error);
             setTimeout(loop, 1000);
@@ -354,7 +360,7 @@ function ajax(method, url, data, continueWith, continueWithError) {
             continueWithError('Error on the server side, response ' + xhr.responseText);
             return;
         }
-        responseLog(xhr.status);
+        console.log("Server response: " + xhr.status + " " + xhr.responseText);
         continueWith(xhr.responseText);
     };
     xhr.ontimeout = function () {
@@ -364,10 +370,6 @@ function ajax(method, url, data, continueWith, continueWithError) {
         continueWithError('Server disconnected');
     };
     xhr.send(data);
-}
-
-function responseLog(responseText) {
-    console.log("Server response: " + responseText);
 }
 
 function defaultErrorHandler(message) {
