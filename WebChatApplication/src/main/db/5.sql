@@ -1,1 +1,1 @@
-select users.* from users where (select count(*) from messages where user_id=users.id)>3;
+select * from users where (select count(*) from messages where user_id=users.id)>3;
