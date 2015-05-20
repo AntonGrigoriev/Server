@@ -54,7 +54,7 @@ public class MessageServlet extends HttpServlet {
                 logger.info("Index: " + index);
                 String tasks;
                 if (index == XMLHistory.getStorageSize()){
-                    response.sendError(HttpServletResponse.SC_NOT_MODIFIED);
+                    response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
                     logger.info("Status: " + HttpServletResponse.SC_NOT_MODIFIED);
                     return;
                 }
@@ -66,7 +66,7 @@ public class MessageServlet extends HttpServlet {
                 out.print(tasks);
                 out.flush();
             } else {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "'token' parameter needed");
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 logger.info("Status: " + HttpServletResponse.SC_BAD_REQUEST);
             }
         } catch (SAXException | ParserConfigurationException e) {
