@@ -1,8 +1,9 @@
 package Chat.servlets;
 
+import Chat.dao.MessageDAO;
+import Chat.dao.MessageDAOImplement;
 import Chat.models.Message;
 import Chat.utils.MessageExchange;
-import Chat.utils.XMLHistory;
 
 import org.xml.sax.SAXException;
 import org.json.simple.JSONObject;
@@ -25,20 +26,19 @@ import org.apache.log4j.Logger;
 @WebServlet("/chat")
 public class MessageServlet extends HttpServlet {
 
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     private static Logger logger = Logger.getLogger(MessageServlet.class.getName());
+    private static MessageDAO messageDAO;
 
     @Override
     public void init() throws ServletException {
         try {
-            if (!XMLHistory.doesStorageExist()) {
-                XMLHistory.createStorage();
-            }
-            List<Message> history = XMLHistory.getSubMessagesByIndex(0);
+            messageDAO = new MessageDAOImplement();
+            List<Message> history = messageDAO.select(0);
             for (Message message:history){
                 System.out.println(message.getTime() + " " + message.getName() + " : " + message.getMessage() + "\r\n");
             }
-        } catch (IOException | SAXException | ParserConfigurationException | TransformerException e) {
+        } catch (Exception e) {
             logger.error(e);
         }
     }
@@ -53,7 +53,7 @@ public class MessageServlet extends HttpServlet {
                 int index = MessageExchange.getIndex(token);
                 logger.info("Index: " + index);
                 String tasks;
-                if (index == XMLHistory.getStorageSize()){
+                if (index == messageDAO.getHistorySize()){
                     response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
                     logger.info("Status: " + HttpServletResponse.SC_NOT_MODIFIED);
                     return;
@@ -84,10 +84,10 @@ public class MessageServlet extends HttpServlet {
             logger.info(message.toString());
             System.out.println("Get message:\r\n");
             System.out.println(message.getTime() + " " + message.getName() + " : " + message.getMessage() + "\r\n");
-            XMLHistory.addData(message);
+            messageDAO.add(message);
             response.setStatus(HttpServletResponse.SC_OK);
             logger.info("Status: " + HttpServletResponse.SC_OK);
-        } catch (ParseException | ParserConfigurationException | SAXException | TransformerException e) {
+        } catch (ParseException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             logger.error(e);
         }
@@ -102,10 +102,10 @@ public class MessageServlet extends HttpServlet {
             logger.info(message.toString());
             System.out.println("Get PUT request:\r\n");
             System.out.println(message.getTime() + " " + message.getName() + " : " + message.getMessage() + "\r\n");
-            XMLHistory.addData(message);
+            messageDAO.add(message);
             response.setStatus(HttpServletResponse.SC_OK);
             logger.info("Status: " + HttpServletResponse.SC_OK);
-        } catch (ParseException | ParserConfigurationException | SAXException | TransformerException e) {
+        } catch (ParseException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             logger.error(e);
         }
@@ -120,10 +120,10 @@ public class MessageServlet extends HttpServlet {
             logger.info(message.toString());
             System.out.println("Get DELETE request:\r\n");
             System.out.println(message.getTime() + " " + message.getName() + " : " + message.getMessage() + "\r\n");
-            XMLHistory.addData(message);
+            messageDAO.add(message);
             response.setStatus(HttpServletResponse.SC_OK);
             logger.info("Status: " + HttpServletResponse.SC_OK);
-        } catch (ParseException | ParserConfigurationException | SAXException | TransformerException e) {
+        } catch (ParseException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             logger.error(e);
         }
@@ -132,8 +132,8 @@ public class MessageServlet extends HttpServlet {
     @SuppressWarnings("unchecked")
     private String formResponse(int index) throws SAXException, IOException, ParserConfigurationException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("messages", XMLHistory.getSubMessagesByIndex(index));
-        jsonObject.put("token", MessageExchange.getToken(XMLHistory.getStorageSize()));
+        jsonObject.put("messages", messageDAO.select(index));
+        jsonObject.put("token", MessageExchange.getToken(messageDAO.getHistorySize()));
         return jsonObject.toJSONString();
     }
 

@@ -176,7 +176,7 @@ function onEditButtonClick(evtObj) {
 
 function onDeleteButtonClick(evtObj) {
     var delPlace = evtObj.target.parentNode.parentNode.parentNode.parentNode.parentNode;
-    var msg = mStruct(Login.value, '', '', delPlace.childNodes[1].attributes['message-id'].value, clientId, 'delete');
+    var msg = mStruct(Login.value, '<deleted>', '', delPlace.childNodes[1].attributes['message-id'].value, clientId, 'delete');
     doDelete(mainUrl, msg);
 }
 
@@ -200,7 +200,7 @@ function deleteMessage(msg, isMine) {
 }
 
 function sendSystemMessage(text) {
-    var msg = mStruct(Login.value, text, '', '', clientId, 'system');
+    var msg = mStruct(Login.value, text, '', Id(), clientId, 'system');
     doPost(mainUrl, msg);
 }
 
@@ -274,9 +274,11 @@ function restoreHistory() {
         if (!server) {
             clientSwitch();
         }
-        var response = JSON.parse(responseText);
-        token = response.token;
-        addMessages(response.messages, true);
+        if (responseText !== "") {
+            var response = JSON.parse(responseText);
+            token = response.token;
+            addMessages(response.messages, true);
+        }
         setTimeout(listenMessages, 1000);
     }, function (error) {
         if (error !== "Server disconnected") {

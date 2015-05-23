@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
 --
--- Host: localhost    Database: chat
+-- Host: localhost    Database: log
 -- ------------------------------------------------------
 -- Server version	5.6.24-log
 
@@ -16,31 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `messages`
+-- Table structure for table `logs`
 --
 
-DROP TABLE IF EXISTS `messages`;
+DROP TABLE IF EXISTS `logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `messages` (
-  `token` int(11) NOT NULL AUTO_INCREMENT,
-  `id` text,
-  `user_id` text,
-  `name` text NOT NULL,
-  `text` text NOT NULL,
-  `time` datetime NOT NULL,
-  `info` text NOT NULL,
-  PRIMARY KEY (`token`)
+CREATE TABLE `logs` (
+  `date` datetime NOT NULL,
+  `level` text NOT NULL,
+  `class` text NOT NULL,
+  `row` int(11) NOT NULL,
+  `message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `messages`
+-- Dumping data for table `logs`
 --
 
-LOCK TABLES `messages` WRITE;
-/*!40000 ALTER TABLE `messages` DISABLE KEYS */;
-/*!40000 ALTER TABLE `messages` ENABLE KEYS */;
+LOCK TABLES `logs` WRITE;
+/*!40000 ALTER TABLE `logs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `logs` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-23 23:27:43
+-- Dump completed on 2015-05-23 23:29:33
